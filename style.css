@@ -1,0 +1,84 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 720px;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    background: url("../assets/home.png") center/cover, rgba(0, 0, 0, 0.5);
+    background-blend-mode: multiply;
+    transition: background-image 1s ease-in-out;
+  }
+  .ancientsBlock {
+    display:flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    width: 500px;
+    border: 2px solid white;
+    margin: 10px;
+    padding: 10px;
+  }
+  .ancientBorder {
+    border: 2px solid red;
+  }
+  .buttonsBlock {
+    flex-wrap: wrap;
+    display:flex;
+    align-content: space-around;
+    justify-content: space-around;
+    width: 200px;
+    border: 2px solid white;
+    margin: 10px;
+    padding: 50px 0px;
+  }
+  .selectModeButton {
+    position: relative;
+    width: 130px;
+    height: 60px;
+    background-color: gray;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+  }
+  .selectModeButton:hover {
+    background-color: #606060;
+  }
+  .selectModeButton:active {
+    left: 5px;
+    top: 5px;
+  }
+
+
+
+
+  .playBlock {
+    display:flex;
+    flex-wrap: nowrap;
+    width: 500px;
+    border: 2px solid white;
+    margin: 10px;
+    padding: 10px;
+  }
+  .column {
+    border: 2px solid white;
+    width: 50%;
+  }
+
+
+
+  .ancientPicture {
+    display: block;
+    width: 47%;
+    height: 47%;
+    background-size: cover;
+  }
