@@ -21,7 +21,7 @@ body {
     flex-wrap: wrap;
     align-content: space-around;
     justify-content: space-around;
-    width: 500px;
+    width: 40%;
     border: 2px solid white;
     margin: 10px;
     padding: 10px;
@@ -34,7 +34,7 @@ body {
     display:flex;
     align-content: space-around;
     justify-content: space-around;
-    width: 200px;
+    width: 15%;
     border: 2px solid white;
     margin: 10px;
     padding: 50px 0px;
@@ -64,18 +64,38 @@ body {
   .playBlock {
     display:flex;
     flex-wrap: nowrap;
-    width: 500px;
+    width: 55%;
     border: 2px solid white;
     margin: 10px;
     padding: 10px;
   }
   .column {
+    font-size: 20px;
+    display:flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
     border: 2px solid white;
     width: 50%;
   }
-
-
-
+  .stages {
+    display:flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    border: 2px solid white;
+    height: 400px;
+    width: 100%;
+  }
+  .text {
+    border: 2px solid white;
+    height: 50px;
+    width: 100%;
+  }
+  .stage {
+    border: 2px solid white;
+    height: 50px;
+    width: 100%;
+  }
   .ancientPicture {
     display: block;
     width: 47%;
