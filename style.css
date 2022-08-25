@@ -9,7 +9,7 @@ body {
     flex-wrap: nowrap;
     height: 100vh;
     font-family: 'Arial', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
     text-align: center;
     background: url("../assets/home.png") center/cover, rgba(0, 0, 0, 0.5);
@@ -78,6 +78,22 @@ body {
     border: 2px solid white;
     width: 50%;
   }
+  .cardBack {
+    display: none;
+    width: 80%;
+    height: 45%;
+    cursor: pointer;
+    padding-top: 50px;
+    background: url("../assets/mythicCardBackground.png") center/cover;
+    border: 2px solid white;
+  }
+  .cardPlay {
+    display: none;
+    width: 80%;
+    height: 45%;
+    /* background: url("../assets/mythicCardBackground.png") center/cover; */
+    border: 2px solid white;
+  }
   .stages {
     display:flex;
     flex-wrap: wrap;
@@ -86,15 +102,36 @@ body {
     height: 400px;
     width: 100%;
   }
-  .text {
+  .textOne, .textTwo, .textThree {
+    text-align: center;
     border: 2px solid white;
     height: 50px;
     width: 100%;
   }
   .stage {
+    display: flex;
+    wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-around;
     border: 2px solid white;
     height: 50px;
     width: 100%;
+  }
+  .blue1, .blue2, .blue3, .green1, .green2, .green3, .brown1, .brown2, .brown3 {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    padding-top: 10px;
+  
+  }
+  .blue1, .blue2, .blue3 {
+    background-color: rgb(13, 13, 161);
+  }
+  .green1, .green2, .green3 {
+    background-color: green;
+  }
+  .brown1, .brown2, .brown3 {
+    background-color: brown;
   }
   .ancientPicture {
     display: block;
