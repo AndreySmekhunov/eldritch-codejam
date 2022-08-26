@@ -4,16 +4,20 @@ const green = ['easy', 'hard', 'hard', 'hard', 'hard', 'hard', 'normal', 'normal
 let cardSetBlue = [];
 let cardSetGreen = [];
 let cardSetBrown = [];
-let stage1 = [];
-let stage2 = [];
-let stage3 = [];
+let countStage = [];
+let colors = ['green','brown','blue'];
+let stageSet = [[],[],[]];
 let stage = [];
 let count = 0;
-let countStage1 = [0,0,0];
-let countStage2 = [0,0,0];
-let countStage3 = [0,0,0];
+let randomSum = 1;
 let currentStage = 1;
 
+function random() {
+  data = new Date();
+  randomSum += (data.getMinutes + data.getSeconds);
+  return Math.abs(Math.sin(randomSum) * 1000) % 1000;
+
+}
 
 const difficulties = [
     {
@@ -159,13 +163,8 @@ const difficulties = [
       cardSetBlue = [];
       cardSetGreen = [];
       cardSetBrown = [];
-      stage1 = [];
-      stage2 = [];
-      stage3 = [];
-      countStage1 = [0,0,0];
-      countStage2 = [0,0,0];
-      countStage3 = [0,0,0];
-      currentStage = 1;
+      stageSet = [[],[],[]];
+      currentStage = 0;
 
       for (let i = 0; i < blue.length; i++) {
         let anyCard = {};
@@ -180,6 +179,7 @@ const difficulties = [
       }  
       for (let i = 0; i < green.length; i++) {
         let anyCard = {};
+        anyCard.stage = 0;
         anyCard.color = 'green';
         anyCard.range = green[i];
         if (anyCard.range == 'easy') anyCard.rangeNum = 0
@@ -210,60 +210,111 @@ const difficulties = [
       let blueNum = 2;
       let greenNum = 5;
       let BrownNum = 9;
+      let cardSet = [];
       if (ancientId == 'cthulhu') {greenNum = 4};
       if (ancientId == 'shubNiggurath') {greenNum = 6; BrownNum = 8};
       // console.log(blueNum,greenNum,BrownNum);
       switch(mode) {
         case 'easest': {
-          cardSetBlue = cardSetBlue.filter(function(a) {return a.range == 'easy'}).sort((a,b) => a.random - b.random).slice(0,2);
+          cardSet = cardSetBlue.filter(function(a) {return a.range == 'easy'});
+          cardSet.sort(function(){return random() - 0.5;});
+          cardSetBlue = cardSet.slice(0,2);
           // отфильтровали только легкие, из них взяли две случайных синие карты
           let tempGreen = cardSetGreen.filter(function(a) {return a.range == 'easy'}).slice(0,5);
           // console.log('tempGreen: ', tempGreen)
-          let remain = cardSetGreen.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - Math.random());
-
+          let remain = cardSetGreen.filter(function(a) {return a.range == 'normal'});
+          remain.sort(function(){return random() - 0.5;});
           if (tempGreen.length == greenNum) cardSetGreen = tempGreen
             else if (tempGreen.length > greenNum) cardSetGreen = tempGreen.slice(0,greenNum)
             else cardSetGreen = tempGreen.concat(remain[0]);
+            cardSetGreen.sort(function(){return random() - 0.5;});;
           // взяли все легкие зеленые карты, в одном случае убрали одну, в одном случае добавили одну нормальную
           let tempBrown = cardSetBrown.filter(function(a) {return a.range == 'easy'}).slice(0,5).concat(cardSetBrown.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - Math.random()).slice(0,4));
           cardSetBrown = tempBrown;
           if (cardSetBrown.length > BrownNum) cardSetBrown = cardSetBrown.slice(0,BrownNum);
+          cardSetBrown.sort(function(){return random() - 0.5;});
           // взяли все легкие карты, добавили к ним 4 нормальных, в одном случае одну убрали
           // console.log('blue: ', cardSetBlue);
           // console.log('green: ', greenNum, cardSetGreen);
           // console.log('brown: ', BrownNum, cardSetBrown);
           // console.log('stop');
+          console.log('sort # 1');
           break;
         }
       }
     } 
 
     function showStages() {
-      document.querySelector('.green1').textContent = countStage1[0];
-      document.querySelector('.brown1').textContent = countStage1[1];
-      document.querySelector('.blue1').textContent = countStage1[2];
+  
+      // console.log(countStage);
+      // а вот щас будем создавать элементы и элементы внутри элементов. спойлер: не получилось
+      let container;
+      let i;
+      let sum;
+      let createName = '';
+ 
+      container = document.getElementById('stage1');
+      while(container.firstChild) {container.removeChild(container.firstChild);}
+      container = document.getElementById('stage2');
+      while(container.firstChild) {container.removeChild(container.firstChild);}
+      container = document.getElementById('stage3');
+      while(container.firstChild) {container.removeChild(container.firstChild);}
 
-      document.querySelector('.green2').textContent = countStage2[0];
-      document.querySelector('.brown2').textContent = countStage2[1];
-      document.querySelector('.blue2').textContent = countStage2[2];
+          i = 0;
+          sum = 0;
+          for (let j = 0; j < 3; j++) {
+              let circle = document.createElement('div');
+              circle.textContent = countStage[i][j].num;
+              sum += countStage[i][j].num;
+              circle.className = 'circle';
+              circle.style.backgroundColor = countStage[i][j].color;
+              container = document.getElementById('stage1');
+              container.append(circle);
+          }
 
-      document.querySelector('.green3').textContent = countStage3[0];
-      document.querySelector('.brown3').textContent = countStage3[1];
-      document.querySelector('.blue3').textContent = countStage3[2];
+          i = 1;
+          sum = 0;
+          for (let j = 0; j < 3; j++) {
+              let circle = document.createElement('div');
+              circle.textContent = countStage[i][j].num;
+              sum += countStage[i][j].num;
+              circle.className = 'circle';
+              circle.style.backgroundColor = countStage[i][j].color;
+              container = document.getElementById('stage2');
+              container.append(circle);
+          }
+
+          i = 2;
+          sum = 0;
+          for (let j = 0; j < 3; j++) {
+              let circle = document.createElement('div');
+              circle.textContent = countStage[i][j].num;
+              sum += countStage[i][j].num;
+              circle.className = 'circle';
+              circle.style.backgroundColor = countStage[i][j].color;
+              container = document.getElementById('stage3');
+              container.append(circle);
+          }
+          // if (!sum) text.style.color = 'gray';
+    
+
+
+
+
     }
 
+
+
     function nextCard() {
+      document.querySelector('.cardPlay').style.display = 'block';
       let url = '';
       count -= 1;
       if (count < 0) {
         return;
       }
-
-
-
-
-
-
+      let i = stage[count].stage;
+      let j = colors.indexOf(stage[count].color);
+      countStage[i][j].num -= 1;
       url = `url("${stage[count].url}") center/cover`;
       document.querySelector('.cardPlay').style.background = url;
       // document.querySelector('.cardPlay').textContent = url;
@@ -273,9 +324,26 @@ const difficulties = [
     }
 
     function letsPlay () {
-      document.querySelector('.cardPlay').style.display = 'block';
+      let str = [];
+      countStage = [];
+      for (let i = 0; i < 3; i++) {
+        // i номер стадии
+        str = [];
+        for (let j = 0; j < 3; j++) {
+          let el = {};
+          el.num = 0;
+          el.color = colors[j];
+          // j номер цвета
+          stage.forEach(a => {if (a.color == el.color && a.stage == i) el.num +=1;})
+          // console.log(el);   
+          str.push(el);
+        }
+        countStage.push(str);
+      }
+     
       document.querySelector('.cardBack').textContent = `Осталось карт: ${count}. Нажмите для продолжения`
       document.querySelector('.cardBack').style.display = 'block';
+      document.querySelector('.cardPlace').style.display = 'block';
       showStages();
       document.querySelector('.cardBack').addEventListener('click', nextCard);
     }
@@ -293,11 +361,16 @@ const difficulties = [
 
 
     function createDeck() {
+      document.querySelector('.cardPlay').style.display = 'none';  
     createCardObject();
     createColorDeck();
-    cardSetBlue.sort((a,b) => Math.random - 0.5);
-    cardSetGreen.sort((a,b) => Math.random - 0.5);
-    cardSetBrown.sort((a,b) => Math.random - 0.5);
+    // console.log(cardSetBlue);
+    cardSetBlue.sort(function(){return random() - 0.5;});
+    // console.log(cardSetBlue);
+    // console.log(cardSetGreen);
+    cardSetGreen.sort(function(){return random() - 0.5;});
+    // console.log(cardSetGreen);
+    cardSetBrown.sort(function(){return random() - 0.5;});
       // перемешали три цветных колоды
       let hero = {};
       for (let i = 0; i < 4; i++) {
@@ -305,74 +378,63 @@ const difficulties = [
       }
       //нашли древнего по ИД
       for (let i = 0; i < hero.firstStage.greenCards; i++) {
-        stage1.push(cardSetGreen[cardSetGreen.length - 1]);
+        stageSet[0].push(cardSetGreen[cardSetGreen.length - 1]);
         cardSetGreen.pop();
       }  
       for (let i = 0; i < hero.secondStage.greenCards; i++) {
-        stage2.push(cardSetGreen[cardSetGreen.length - 1]);
+        stageSet[1].push(cardSetGreen[cardSetGreen.length - 1]);
         cardSetGreen.pop();
       }  
       for (let i = 0; i < hero.thirdStage.greenCards; i++) {
-        stage3.push(cardSetGreen[cardSetGreen.length - 1]);
+        stageSet[2].push(cardSetGreen[cardSetGreen.length - 1]);
         cardSetGreen.pop();
       } 
       // add green cards to 1, 2 and 3 stage
 
       for (let i = 0; i < hero.firstStage.brownCards; i++) {
-        stage1.push(cardSetBrown[cardSetBrown.length - 1]);
+        stageSet[0].push(cardSetBrown[cardSetBrown.length - 1]);
         cardSetBrown.pop();
       }  
       for (let i = 0; i < hero.secondStage.brownCards; i++) {
-        stage2.push(cardSetBrown[cardSetBrown.length - 1]);
+        stageSet[1].push(cardSetBrown[cardSetBrown.length - 1]);
         cardSetBrown.pop();
       }  
       for (let i = 0; i < hero.thirdStage.brownCards; i++) {
-        stage3.push(cardSetBrown[cardSetBrown.length - 1]);
+        stageSet[2].push(cardSetBrown[cardSetBrown.length - 1]);
         cardSetBrown.pop();
       } 
          // add brown cards to 1, 2 and 3 stage
 
       for (let i = 0; i < hero.firstStage.blueCards; i++) {
-      stage1.push(cardSetBlue[cardSetBlue.length - 1]);
+      stageSet[0].push(cardSetBlue[cardSetBlue.length - 1]);
       cardSetBlue.pop();
       }  
       for (let i = 0; i < hero.secondStage.blueCards; i++) {
-        stage2.push(cardSetBlue[cardSetBlue.length - 1]);
+        stageSet[1].push(cardSetBlue[cardSetBlue.length - 1]);
         cardSetBlue.pop();
       }  
       for (let i = 0; i < hero.thirdStage.blueCards; i++) {
-        stage3.push(cardSetBlue[cardSetBlue.length - 1]);
+        stageSet[2].push(cardSetBlue[cardSetBlue.length - 1]);
         cardSetBlue.pop();
       } 
           // add blue cards to 1, 2 and 3 stage      
-
-      stage1.sort((a,b) => Math.random - 0.5);
-      stage2.sort((a,b) => Math.random - 0.5);
-      stage3.sort((a,b) => Math.random - 0.5);
-
-      for (let i = 0; i < stage1.length; i++) {
-        if (stage1[i].color == 'green') countStage1[0] += 1 
-          else if (stage1[i].color == 'brown') countStage1[1] += 1
-          else countStage1[2] += 1;
+      for (let i = 0; i < 3; i++) {
+        stageSet[i].sort(function(){return random() - 0.5;});
       }
-      for (let i = 0; i < stage2.length; i++) {
-        if (stage2[i].color == 'green') countStage2[0] += 1 
-          else if (stage2[i].color == 'brown') countStage2[1] += 1
-          else countStage2[2] += 1;
+      stage = [];
+      // stage = stageSet[2].concat(stageSet[1], stageSet[0]);
+      for (let i = 0; i < 3; i++) {
+        for (j = 0; j < stageSet[i].length; j++) {
+          stageSet[i][j].stage = i;
+          stage.push(stageSet[i][j]);
+          // console.log(stageSet[i][j]);
+        }
       }
-      for (let i = 0; i < stage3.length; i++) {
-        if (stage3[i].color == 'green') countStage3[0] += 1 
-          else if (stage3[i].color == 'brown') countStage3[1] += 1
-          else countStage3[2] += 1;
-      }
-      console.log(countStage1,countStage2,countStage3);
-
-      // shuffle cards
-      // console.log(stage1, stage2, stage3) 
-      stage = stage3.concat(stage2, stage1);
       count = stage.length;
-      console.log(stage);
+      stage.reverse();
+ 
       letsPlay();
+    
 
 
     // if (mode == 'easest') cardSet.sort((a,b) => a.rangeNum - b.rangeNum);
