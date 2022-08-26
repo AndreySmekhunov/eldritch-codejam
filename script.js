@@ -45,7 +45,7 @@ const difficulties = [
       },
   ]
 
-
+  let difName = ['Легкая', 'Нормальная', 'Сложная']
   let ancientsData = [
     {
       id: 'azathoth',
@@ -349,6 +349,8 @@ const difficulties = [
       url = `url("${stage[count].url}") center/cover`;
       document.querySelector('.cardPlay').style.background = url;
       // document.querySelector('.cardPlay').textContent = url;
+      console.log(`Цвет: ${stage[count].color}, сложность: ${difName[stage[count].rangeNum]} `);
+      console.log(`Файл: ${stage[count].url}`);
       document.querySelector('.cardBack').textContent = `Осталось карт: ${count}. Нажмите для продолжения`;
       if (count == 0) document.querySelector('.cardBack').textContent = `Все карты использованы. Создайте новую колоду`;
       showStages();
