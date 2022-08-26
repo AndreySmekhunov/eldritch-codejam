@@ -14,9 +14,12 @@ let currentStage = 1;
 
 function random() {
   data = new Date();
-  randomSum += (data.getMinutes + data.getSeconds);
-  return Math.abs(Math.sin(randomSum) * 1000) % 1000;
-
+  randomSum += (Number(data.getMinutes()) + Number(data.getSeconds()));
+  let sin = Math.abs(Math.sin(randomSum));
+  let a = sin * 1000 - Math.trunc(sin * 1000);
+  randomSum += a;
+  // console.log(a)
+  return a;
 }
 
 const difficulties = [
@@ -209,16 +212,16 @@ const difficulties = [
     function createColorDeck() {
       let blueNum = 2;
       let greenNum = 5;
-      let BrownNum = 9;
+      let brownNum = 9;
       let cardSet = [];
       if (ancientId == 'cthulhu') {greenNum = 4};
-      if (ancientId == 'shubNiggurath') {greenNum = 6; BrownNum = 8};
+      if (ancientId == 'shubNiggurath') {greenNum = 6; brownNum = 8};
       // console.log(blueNum,greenNum,BrownNum);
       switch(mode) {
         case 'easest': {
           cardSet = cardSetBlue.filter(function(a) {return a.range == 'easy'});
           cardSet.sort(function(){return random() - 0.5;});
-          cardSetBlue = cardSet.slice(0,2);
+          cardSetBlue = cardSet.slice(0,blueNum);
           // отфильтровали только легкие, из них взяли две случайных синие карты
           let tempGreen = cardSetGreen.filter(function(a) {return a.range == 'easy'}).slice(0,5);
           // console.log('tempGreen: ', tempGreen)
@@ -229,16 +232,46 @@ const difficulties = [
             else cardSetGreen = tempGreen.concat(remain[0]);
             cardSetGreen.sort(function(){return random() - 0.5;});;
           // взяли все легкие зеленые карты, в одном случае убрали одну, в одном случае добавили одну нормальную
-          let tempBrown = cardSetBrown.filter(function(a) {return a.range == 'easy'}).slice(0,5).concat(cardSetBrown.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - Math.random()).slice(0,4));
+          let tempBrown = cardSetBrown.filter(function(a) {return a.range == 'easy'}).slice(0,5).concat(cardSetBrown.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - random()).slice(0,4));
           cardSetBrown = tempBrown;
-          if (cardSetBrown.length > BrownNum) cardSetBrown = cardSetBrown.slice(0,BrownNum);
+          if (cardSetBrown.length > brownNum) cardSetBrown = cardSetBrown.slice(0,brownNum);
           cardSetBrown.sort(function(){return random() - 0.5;});
           // взяли все легкие карты, добавили к ним 4 нормальных, в одном случае одну убрали
-          // console.log('blue: ', cardSetBlue);
-          // console.log('green: ', greenNum, cardSetGreen);
-          // console.log('brown: ', BrownNum, cardSetBrown);
-          // console.log('stop');
-          console.log('sort # 1');
+          break;
+        }
+        case 'hardest': {
+          cardSet = cardSetBlue.filter(function(a) {return a.range == 'hard'});
+          cardSet.sort(function(){return random() - 0.5;});
+          cardSetBlue = cardSet.slice(0,blueNum);
+          // отфильтровали только сложные, из них взяли две случайных синие карты
+          let tempGreen = cardSetGreen.filter(function(a) {return a.range == 'hard'}).concat(cardSetGreen.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - random()));
+          cardSetGreen = tempGreen;
+          if (cardSetGreen.length > greenNum) cardSetGreen = cardSetGreen.slice(0,greenNum);
+          cardSetGreen.sort(function(){return random() - 0.5;});
+          // взяли все сложные карты, добавили все нормальные, убрали лишнее
+          let tempBrown = cardSetBrown.filter(function(a) {return a.range == 'hard'}).concat(cardSetBrown.filter(function(a) {return a.range == 'normal'}).sort((a,b) => 0.5 - random()));
+          cardSetBrown = tempBrown;
+          if (cardSetBrown.length > brownNum) cardSetBrown = cardSetBrown.slice(0,brownNum);
+          cardSetBrown.sort(function(){return random() - 0.5;});
+          // взяли все сложные карты, добавили все нормальные, убрали лишнее
+          break;
+        }
+        case 'easy':{
+          cardSetBlue = cardSetBlue.filter(function(a) {return a.range !== 'hard'}).sort((a,b) => 0.5 - random()).slice(0,blueNum);
+          cardSetGreen = cardSetGreen.filter(function(a) {return a.range !== 'hard'}).sort((a,b) => 0.5 - random()).slice(0,greenNum);
+          cardSetBrown = cardSetBrown.filter(function(a) {return a.range !== 'hard'}).sort((a,b) => 0.5 - random()).slice(0,brownNum);
+          break;
+        }
+        case 'hard':{
+          cardSetBlue = cardSetBlue.filter(function(a) {return a.range !== 'easy'}).sort((a,b) => 0.5 - random()).slice(0,blueNum);
+          cardSetGreen = cardSetGreen.filter(function(a) {return a.range !== 'easy'}).sort((a,b) => 0.5 - random()).slice(0,greenNum);
+          cardSetBrown = cardSetBrown.filter(function(a) {return a.range !== 'easy'}).sort((a,b) => 0.5 - random()).slice(0,brownNum);
+          break;
+        }
+        case 'normal':{
+          cardSetBlue = cardSetBlue.sort((a,b) => 0.5 - random()).slice(0,blueNum);
+          cardSetGreen = cardSetGreen.sort((a,b) => 0.5 - random()).slice(0,greenNum);
+          cardSetBrown = cardSetBrown.sort((a,b) => 0.5 - random()).slice(0,brownNum);
           break;
         }
       }
@@ -271,6 +304,8 @@ const difficulties = [
               container = document.getElementById('stage1');
               container.append(circle);
           }
+          if (!sum) document.getElementById('tytle1').style.color = 'gray'
+          else document.getElementById('tytle1').style.color = 'white';
 
           i = 1;
           sum = 0;
@@ -283,6 +318,8 @@ const difficulties = [
               container = document.getElementById('stage2');
               container.append(circle);
           }
+          if (!sum) document.getElementById('tytle2').style.color = 'gray'
+          else document.getElementById('tytle2').style.color = 'white';
 
           i = 2;
           sum = 0;
@@ -295,15 +332,9 @@ const difficulties = [
               container = document.getElementById('stage3');
               container.append(circle);
           }
-          // if (!sum) text.style.color = 'gray';
-    
-
-
-
-
+          if (!sum) document.getElementById('tytle3').style.color = 'gray'
+          else document.getElementById('tytle3').style.color = 'white';
     }
-
-
 
     function nextCard() {
       document.querySelector('.cardPlay').style.display = 'block';

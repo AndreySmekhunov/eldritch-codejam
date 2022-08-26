@@ -22,7 +22,6 @@ body {
     align-content: space-around;
     justify-content: space-around;
     width: 40%;
-    border: 2px solid white;
     margin: 10px;
     padding: 10px;
   }
@@ -35,7 +34,6 @@ body {
     align-content: space-around;
     justify-content: space-around;
     width: 15%;
-    border: 2px solid white;
     margin: 10px;
     padding: 50px 0px;
   }
@@ -58,14 +56,10 @@ body {
     top: 5px;
   }
 
-
-
-
   .playBlock {
     display:flex;
     flex-wrap: nowrap;
     width: 55%;
-    border: 2px solid white;
     margin: 10px;
     padding: 10px;
   }
@@ -75,64 +69,69 @@ body {
     flex-wrap: wrap;
     align-content: space-around;
     justify-content: space-around;
-    border: 2px solid white;
     width: 50%;
   }
   .cardBack {
     display: none;
-    width: 80%;
-    height: 45%;
+    width: 75%;
+    height: 47%;
     cursor: pointer;
     padding-top: 50px;
     background: url("../assets/mythicCardBackground.png") center/cover;
-    border: 2px solid white;
+  }
+  .cardPlace {
+    display: none;
+    width: 75%;
+    height: 47%;
+    /* background: url("../assets/mythicCardBackground.png") center/cover; */
   }
   .cardPlay {
-    display: none;
-    width: 80%;
-    height: 45%;
-    /* background: url("../assets/mythicCardBackground.png") center/cover; */
-    border: 2px solid white;
+    display: block;
+    height: 100%;
+    width: 100%;
   }
   .stages {
     display:flex;
     flex-wrap: wrap;
     align-content: space-around;
-    border: 2px solid white;
-    height: 400px;
+    height: 350px;
     width: 100%;
   }
-  .textOne, .textTwo, .textThree {
+  .showStages {
+    display:flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+  }
+  .text {
     text-align: center;
-    border: 2px solid white;
-    height: 50px;
+    height: 60px;
+    line-height: 30px;
     width: 100%;
+    margin: 10px 0 20px 0;
+  }
+  .textStage {
+    color: white;
+    text-align: center;
+    height: 40px;
+    width: 100%;
+    margin: 5px 0 5px 0;
   }
   .stage {
     display: flex;
-    wrap: nowrap;
+    flex-wrap: nowrap;
     align-content: space-around;
     justify-content: space-around;
-    border: 2px solid white;
     height: 50px;
     width: 100%;
   }
-  .blue1, .blue2, .blue3, .green1, .green2, .green3, .brown1, .brown2, .brown3 {
+  .circle {
     width: 40px;
     height: 40px;
     border-radius: 20px;
     padding-top: 10px;
   
   }
-  .blue1, .blue2, .blue3 {
-    background-color: rgb(13, 13, 161);
-  }
-  .green1, .green2, .green3 {
-    background-color: green;
-  }
-  .brown1, .brown2, .brown3 {
-    background-color: brown;
-  }
+
   .ancientPicture {
     display: block;
     width: 47%;
