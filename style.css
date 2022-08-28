@@ -12,7 +12,7 @@ body {
     font-size: 20px;
     color: #fff;
     text-align: center;
-    background: url("../assets/home.png") center/cover, rgba(0, 0, 0, 0.5);
+    background: url("../assets/home.jpg") center/cover, rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
     transition: background-image 1s ease-in-out;
   }
@@ -77,13 +77,13 @@ body {
     height: 47%;
     cursor: pointer;
     padding-top: 50px;
-    background: url("../assets/mythicCardBackground.png") center/cover;
+    background: url("../assets/mythicCardBackground.jpg") center/cover;
   }
   .cardPlace {
     display: none;
     width: 75%;
     height: 47%;
-    /* background: url("../assets/mythicCardBackground.png") center/cover; */
+    /* background: url("../assets/mythicCardBackground.jpg") center/cover; */
   }
   .cardPlay {
     display: block;

@@ -11,6 +11,7 @@ let stage = [];
 let count = 0;
 let randomSum = 1;
 let currentStage = 1;
+let modeName;
 
 function random() {
   data = new Date();
@@ -51,7 +52,7 @@ const difficulties = [
       id: 'azathoth',
       name: 'azathoth',
       count: 16,
-      cardFace: 'assets/Ancients/Azathoth.png',
+      cardFace: 'assets/Ancients/Azathoth.jpg',
       stage:[],
       firstStage: {
         greenCards: 1,
@@ -73,7 +74,7 @@ const difficulties = [
       id: 'cthulhu',
       name: 'cthulhu',
       count: 15,
-      cardFace: 'assets/Ancients/Cthulthu.png',
+      cardFace: 'assets/Ancients/Cthulthu.jpg',
       firstStage: {
         greenCards: 0,
         blueCards: 2,
@@ -94,7 +95,7 @@ const difficulties = [
       id: 'iogSothoth',
       name: 'iogSothoth',
       count: 16,
-      cardFace: 'assets/Ancients/iogSothoth.png',
+      cardFace: 'assets/Ancients/iogSothoth.jpg',
       firstStage: {
         greenCards: 0,
         blueCards: 1,
@@ -115,7 +116,7 @@ const difficulties = [
       id: 'shubNiggurath',
       name: 'shubNiggurath',
       count: 16,
-      cardFace: 'assets/Ancients/shubNiggurath.png',
+      cardFace: 'assets/Ancients/shubNiggurath.jpg',
       firstStage: {
         greenCards: 1,
         blueCards: 1,
@@ -150,7 +151,7 @@ const difficulties = [
         target.classList.add('ancientBorder');
         hero = target;
         ancientId = hero.id
-        document.getElementById('text1').textContent = 'Выбранный Древний: ' + ancientId;
+        document.getElementById('text1').textContent = ancientId;
       }
     } 
     function selectMode(e) {
@@ -158,7 +159,9 @@ const difficulties = [
         if (target.id == 'buttonsMode') return;
         // hidden();
         mode = target.id;
-        document.getElementById('text2').textContent = 'Выбранная Сложность: ' + mode;
+        modeName = difficulties.find(a => a.id === mode).name;
+        // alert(modeName);
+        document.getElementById('text2').textContent = modeName;
         } 
 
 
@@ -176,7 +179,7 @@ const difficulties = [
         if (anyCard.range == 'easy') anyCard.rangeNum = 0
         else if (anyCard.range == 'normal') anyCard.rangeNum = 1
         else anyCard.rangeNum = 2;
-        anyCard.url = `../assets/MythicCards/blue/blue${i+1}.png`;
+        anyCard.url = `../assets/MythicCards/blue/blue${i+1}.jpg`;
         anyCard.random = Math.random();
         cardSetBlue.push(anyCard);
       }  
@@ -188,7 +191,7 @@ const difficulties = [
         if (anyCard.range == 'easy') anyCard.rangeNum = 0
         else if (anyCard.range == 'normal') anyCard.rangeNum = 1
         else anyCard.rangeNum = 2;
-        anyCard.url = `../assets/MythicCards/green/green${i+1}.png`;
+        anyCard.url = `../assets/MythicCards/green/green${i+1}.jpg`;
         anyCard.random = Math.random();
         cardSetGreen.push(anyCard);
       }  
@@ -199,7 +202,7 @@ const difficulties = [
         if (anyCard.range == 'easy') anyCard.rangeNum = 0
         else if (anyCard.range == 'normal') anyCard.rangeNum = 1
         else anyCard.rangeNum = 2;
-        anyCard.url = `../assets/MythicCards/brown/brown${i+1}.png`;
+        anyCard.url = `../assets/MythicCards/brown/brown${i+1}.jpg`;
         anyCard.random = Math.random();
         cardSetBrown.push(anyCard);
       }  
@@ -497,7 +500,8 @@ const difficulties = [
     modeButton.textContent = difficulties[i].name;
     buttonsMode.append(modeButton);
   }
-  document.getElementById('text1').textContent = 'Выбранный Древний: ' + ancientId;
-  document.getElementById('text2').textContent = 'Выбранная Сложность: ' + mode;
+  document.getElementById('text1').textContent = ancientId;
+  modeName = difficulties.find(a => a.id === mode).name;
+  document.getElementById('text2').textContent = modeName;
   document.querySelector('.buttonsBlock').addEventListener('click', selectMode);
   document.getElementById('start').addEventListener('click', createDeck);
